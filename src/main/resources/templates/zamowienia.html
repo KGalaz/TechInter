@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/zamowienia.js" type="text/javascript"></script>
+</head>
+<style>
+    .potrawa{
+        background-color: crimson;
+        width: 250px;
+        border: 3px solid black;
+    }
+    p, button {
+        display: inline;
+    }
+</style>
+<body>
+<div th:replace="fragments/nawigacja">
+    Loading...
+</div>
+<div class="potrawa" th:each="potrawa : ${listaPotrawDto}">
+    <span>Id potrawy: </span> <p th:text="${potrawa.getId()}"></p> <br>
+    <span>Nazwa potrawy: </span> <p th:text="${potrawa.getNazwa()}"></p> <br>
+    <span>Cena potrawy: </span> <p th:text="${potrawa.getCena()}"></p> <br>
+    <span>Rodzaj potrawy: </span> <p th:text="${potrawa.utworzOpis()}"></p> <br>
+    <button th:value="${potrawa.getId()}" onclick="dodajPotrawe(this.value)">Dodaj potrawe</button> <button>Usuń potrawe</button>
+</div>
+
+<div th:replace="fragments/stopka">
+    Loading...
+</div>
+<script>
+    function dodajPotrawe(param) {
+        console.log(param)
+        // this.koszyk.push()
+    }
+</script>
+</body>
+</html>

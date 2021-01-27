@@ -16,8 +16,9 @@ public class Potrawy {
     @Column(name = "cenapotrawy")
     private double cenaPotrawy;
 
-    @Column(name = "rodzajpotraw")
-    private int rodzajPotrawy;
+    @OneToOne
+    @JoinColumn(name = "rodzajpotrawy", referencedColumnName = "id_rodzaj")
+    private RodzajePotraw rodzajPotrawy;
 
     public Long getId() {
         return id;
@@ -31,7 +32,7 @@ public class Potrawy {
         return cenaPotrawy;
     }
 
-    public int getRodzajPotrawy() {
+    public RodzajePotraw getRodzajPotrawy() {
         return rodzajPotrawy;
     }
 }

@@ -3,20 +3,18 @@ package techInter.demo.dto;
 import techInter.demo.entity.Potrawy;
 import techInter.demo.entity.RodzajePotraw;
 
-import java.util.List;
-
 public class PotrawaDto {
 
     private Long id;
     private String nazwa;
     private double cena;
-    private String[] rodzajPotrawy;
+    private String rodzajPotrawy;
 
-    public PotrawaDto(Potrawy potrawy, String... lista) {
+    public PotrawaDto(Potrawy potrawy, RodzajePotraw rodzajPotrawy) {
         this.id = potrawy.getId();
         this.nazwa = potrawy.getNazwaPotrawy();
         this.cena = potrawy.getCenaPotrawy();
-        this.rodzajPotrawy = lista;
+        this.rodzajPotrawy = rodzajPotrawy.getOpis();
     }
 
     public Long getId() {
@@ -43,24 +41,11 @@ public class PotrawaDto {
         this.cena = cena;
     }
 
-    public String[] getRodzajPotrawy() {
+    public String getRodzajPotrawy() {
         return rodzajPotrawy;
     }
 
-    public void setRodzajPotrawy(String... rodzajPotrawy) {
+    public void setRodzajPotrawy(String rodzajPotrawy) {
         this.rodzajPotrawy = rodzajPotrawy;
-    }
-
-    public String utworzOpis(){
-        StringBuilder sb = new StringBuilder();
-        int dlugoscTablicy =  rodzajPotrawy.length;
-        if(dlugoscTablicy == 0) {
-            return "";
-        }
-        for (int i = 0; i < dlugoscTablicy; i++) {
-            sb.append(rodzajPotrawy[i]);
-            sb.append(", ");
-        }
-        return sb.toString();
     }
 }

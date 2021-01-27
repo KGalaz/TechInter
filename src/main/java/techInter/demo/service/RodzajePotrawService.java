@@ -6,6 +6,7 @@ import techInter.demo.entity.RodzajePotraw;
 import techInter.demo.repository.RodzajePotrawRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RodzajePotrawService {
@@ -17,4 +18,8 @@ public class RodzajePotrawService {
         return rodzajePotrawRepository.findAll();
     }
 
+    public RodzajePotraw findById(long id) {
+        Optional<RodzajePotraw> rodzajePotraw = rodzajePotrawRepository.findById(id);
+        return rodzajePotraw.orElseGet(() -> new RodzajePotraw("Nowość"));
+    }
 }

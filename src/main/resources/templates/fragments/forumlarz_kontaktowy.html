@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="formularz_kontaktowy">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        <form action="http://localhost:8080/zamowienia/zamow" method="post">
+            <label for="adres">Adres</label>
+            <input type="text" name="adres" id="adres"> <br>
+            <label for="naKiedy">Na kiedy: </label>
+            <input type="datetime-local" name="na_kiedy" id="naKiedy" placeholder="DD-MM-RRRR GG:MM">
+            <button type="submit">Zamów</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="#{html.title}"></title>
     <script type="text/javascript"  th:src="@{/js/zamowienia.js}"></script>
 </head>
 <style>
@@ -14,21 +14,39 @@
     p, button {
         display: inline;
     }
+
+    div > form
+    {
+        display: block;
+        text-align: center;
+    }
+    form
+    {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: left;
+    }
+
 </style>
 <body>
 <div th:replace="fragments/nawigacja">
     Loading...
 </div>
 <div class="potrawa" th:each="potrawa : ${listaPotrawDto}">
-    <span>Id potrawy: </span> <p th:text="${potrawa.getId()}"></p> <br>
+    <span>Potrawa nr: </span> <p th:text="${potrawa.getId()}"></p> <br>
     <span>Nazwa potrawy: </span> <p th:text="${potrawa.getNazwa()}"></p> <br>
     <span>Cena potrawy: </span> <p th:text="${potrawa.getCena()}"></p> <br>
-    <span>Rodzaj potrawy: </span> <p th:text="${potrawa.utworzOpis()}"></p> <br>
+    <span>Rodzaj potrawy: </span> <p th:text="${potrawa.getRodzajPotrawy()}"></p> <br>
     <button th:value="${potrawa.getId()}" onclick="dodajPotrawe(this.value)">Dodaj potrawe</button>
     <button th:value="${potrawa.getId()}" onclick="usunPotrawe(this.value)">Usuń potrawe</button>
 </div>
 
-<div style="float: right" th:replace="fragments/panelBoczny">
+<div th:replace="fragments/panelBoczny">
+    Loading...
+</div>
+
+<div th:replace="fragments/forumlarz_kontaktowy">
     Loading...
 </div>
 

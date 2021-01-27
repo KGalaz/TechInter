@@ -13,6 +13,10 @@
         float: right;
     }
 
+    ul div {
+        float: left;
+    }
+
     ul li a {
         display: block;
         color: white;
@@ -25,10 +29,23 @@
         background-color: #111;
     }
 
+    .logo {
+        border-radius: 25px;
+        background-color: orangered;
+        height: 46px;
+        width: 100px;
+        text-align: center;
+        display: block;
+    }
+
+    body{
+        margin: 0;
+    }
 </style>
-<div>Logo</div>
+
 <div>
     <ul>
+        <div class="logo">Logo</div>
         <li><a href="zamowienia">Zamówienia</a></li>
         <li><a class="active" href="/">Strona główna</a></li>
     </ul>

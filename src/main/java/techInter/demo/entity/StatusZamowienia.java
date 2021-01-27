@@ -3,25 +3,31 @@ package techInter.demo.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "rodzaj_potraw")
-public class RodzajePotraw {
+@Table(name="status_zamowienia")
+public class StatusZamowienia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_rodzaj")
+    @Column(name="id_status")
     private Long id;
 
+    @Column(name="opis")
     private String opis;
 
-    public RodzajePotraw() {
+    public StatusZamowienia(Long id, String opis) {
+        this.id = id;
+        this.opis = opis;
     }
 
-    public RodzajePotraw(String opis) {
-        this.opis = opis;
+    public StatusZamowienia() {
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getOpis() {

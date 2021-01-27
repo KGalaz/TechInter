@@ -3,14 +3,12 @@ const koszykMap = new Map;
 function aktualizujKoszyk() {
     //todo dokonczyc
     let elemP = document.getElementById("koszyk");
-    let tekst;
+    let tekst = "";
     koszykMap.forEach( (v, k) => {
-        tekst = tekst + k + ": ilość-> " + k + "<br>"
+        tekst = tekst + "Numer potrawy: " + k + ": ilość-> " + v + "<br>"
     })
     elemP.innerHTML = tekst;
 }
-
-
 
 function dodajPotrawe(param) {
     let ilosc;
@@ -20,7 +18,6 @@ function dodajPotrawe(param) {
         ilosc = koszykMap.get(param)
     }
     koszykMap.set(param, ++ilosc)
-    console.log("Koszyk: ", koszykMap)
     aktualizujKoszyk();
 }
 
@@ -34,6 +31,5 @@ function usunPotrawe(param) {
         return;
     }
     koszykMap.set(param, --ilosc)
-    console.log(koszykMap)
     aktualizujKoszyk()
 }

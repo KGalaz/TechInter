@@ -3,16 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script
+            src="https://code.jquery.com/jquery-3.5.1.js"
+            integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+            crossorigin="anonymous"></script>
 </head>
 <body>
     <div>
-        <form action="http://localhost:8080/zamowienia/zamow" method="post">
+        <form id="formularz">
             <label for="adres">Adres</label>
             <input type="text" name="adres" id="adres"> <br>
             <label for="naKiedy">Na kiedy: </label>
             <input type="datetime-local" name="na_kiedy" id="naKiedy" placeholder="DD-MM-RRRR GG:MM">
-            <button type="submit">Zamów</button>
+            <button type="submit" onclick=wyslij(event)>Zamów</button>
         </form>
     </div>
+
+    <script>
+        function wyslij(event) {
+            event.preventDefault()
+            var adres = document.getElementById("adres").value
+            var na_kiedy = document.getElementById("naKiedy").value
+            console.log(adres)
+            var formData = JSON.stringify($("#formularz").serializeArray());
+
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/zamowienia/zamow",
+                data: JSON.stringify({"adres": adres, "na_kiedy": na_kiedy}),
+                success: function(data){
+                    alert(data.text);
+                },
+                dataType: "json",
+                contentType : "application/json"
+            });
+        }
+
+    </script>
+
+
 </body>
 </html>

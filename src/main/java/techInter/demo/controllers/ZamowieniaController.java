@@ -2,13 +2,14 @@ package techInter.demo.controllers;
 
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import techInter.demo.dto.Odpowiedz;
 import techInter.demo.dto.PotrawaDto;
+import techInter.demo.dto.ZamowienieDane;
 import techInter.demo.entity.Potrawy;
 import techInter.demo.entity.RodzajePotraw;
 import techInter.demo.entity.Zamowienie;
@@ -54,11 +55,14 @@ public class ZamowieniaController {
     }
 
     @PostMapping("/zamow")
-    public void Zamowienie(@RequestParam String adres, @RequestParam String na_kiedy) throws ParseException {
-        System.out.println(adres);
+    public ResponseEntity<?> Zamowienie(@RequestBody ZamowienieDane dane) throws ParseException {
+        Odpowiedz odpowiedz = new Odpowiedz();
+        System.out.println(dane.getAdres());
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-        LocalDateTime dateTime = LocalDateTime.parse(na_kiedy, format);
+        LocalDateTime dateTime = LocalDateTime.parse(dane.getNa_kiedy(), format);
         System.out.println(dateTime);
+        odpowiedz.setText("OK, jest ok");
+        return new ResponseEntity<>(odpowiedz, HttpStatus.OK);
     }
 
     @GetMapping("/test")

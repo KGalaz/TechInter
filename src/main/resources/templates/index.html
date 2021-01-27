@@ -4,11 +4,31 @@
     <meta charset="UTF-8">
     <title>Lab 3</title>
 </head>
+<style>
+    .content {
+        text-align: center;
+        display: block;
+    }
+
+    p {
+        font-size: x-large;
+    }
+
+    body{
+        margin: 0;
+        height: 100%;
+        background-color: darkseagreen;
+    }
+</style>
 <body>
 <div th:replace="fragments/nawigacja">
     Loading...
 </div>
-Strona glowna
+
+<div class="content">
+    <p>Strona główna</p>
+    <p>Zapraszamy do zamówień</p>
+</div>
 
 <div th:replace="fragments/stopka">
     Loading...

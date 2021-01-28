@@ -18,29 +18,5 @@
             <button type="submit" onclick=wyslij(event)>Zamów</button>
         </form>
     </div>
-
-    <script>
-        function wyslij(event) {
-            event.preventDefault()
-            var adres = document.getElementById("adres").value
-            var na_kiedy = document.getElementById("naKiedy").value
-            console.log(adres)
-            var formData = JSON.stringify($("#formularz").serializeArray());
-
-            $.ajax({
-                type: "POST",
-                url: "http://localhost:8080/zamowienia/zamow",
-                data: JSON.stringify({"adres": adres, "na_kiedy": na_kiedy}),
-                success: function(data){
-                    alert(data.text);
-                },
-                dataType: "json",
-                contentType : "application/json"
-            });
-        }
-
-    </script>
-
-
 </body>
 </html>

@@ -1,35 +1,52 @@
-const koszykMap = new Map;
+var koszykMap = {}
 
 function aktualizujKoszyk() {
-    //todo dokonczyc
     let elemP = document.getElementById("koszyk");
     let tekst = "";
-    koszykMap.forEach( (v, k) => {
-        tekst = tekst + "Numer potrawy: " + k + ": ilość-> " + v + "<br>"
-    })
+    for(var klucz in koszykMap) {
+        tekst = tekst + "Numer potrawy: " + klucz + ": ilość-> " + koszykMap[klucz] + "<br>"
+    }
     elemP.innerHTML = tekst;
 }
 
 function dodajPotrawe(param) {
     let ilosc;
-    if(koszykMap.get(param) === undefined) {
+    if(koszykMap[param] === undefined) {
         ilosc = 0;
     } else {
-        ilosc = koszykMap.get(param)
+        ilosc = koszykMap[param]
     }
-    koszykMap.set(param, ++ilosc)
+    koszykMap[param] = ++ilosc
     aktualizujKoszyk();
 }
 
 function usunPotrawe(param) {
     let ilosc;
-    if(koszykMap.get(param !== undefined)) {
+    if(koszykMap[param] === undefined) {
         return;
     }
-    ilosc = koszykMap.get(param);
+    ilosc = koszykMap[param];
     if(ilosc === 0) {
         return;
     }
-    koszykMap.set(param, --ilosc)
+    koszykMap[param] = --ilosc
     aktualizujKoszyk()
+}
+
+function wyslij(event) {
+    event.preventDefault()
+    var adres = document.getElementById("adres").value
+    var na_kiedy = document.getElementById("naKiedy").value
+    var koszyk = koszykMap
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/zamowienia/zamow",
+        data: JSON.stringify({"adres": adres, "na_kiedy": na_kiedy, "koszyk": koszyk}),
+        success: function(data){
+            alert(data.text);
+        },
+        dataType: "json",
+        contentType : "application/json"
+    });
 }

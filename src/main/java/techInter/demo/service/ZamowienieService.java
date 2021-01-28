@@ -17,4 +17,13 @@ public class ZamowienieService {
         return zamowienieRepository.findAll();
     }
 
+    public Long iloscZamowien() {
+        return zamowienieRepository.count();
+    }
+
+    public Long zapiszIzwrocId(Zamowienie zamowienie){
+        Zamowienie zam = zamowienieRepository.save(zamowienie);
+        return zam.getId();
+    }
+
 }

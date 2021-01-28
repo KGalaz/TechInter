@@ -12,14 +12,14 @@ public class Zamowienie {
     @Column(name="id_zamowienie")
     private Long id;
 
+    @Column(name = "id_klient")
+    private Long idKlient;
+
     private String adres;
 
     @Column(name="na_kiedy")
     private LocalDateTime naKiedy;
 
-//    @OneToOne
-    //@JoinColumn(name="status_id", referencedColumnName = "id_status")
-//    @JoinTable(name ="status_zamowienia", joinColumns = {})
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumns({
             @JoinColumn(name="status_id", referencedColumnName="id_status")
@@ -56,5 +56,13 @@ public class Zamowienie {
 
     public void setStatusZamowienia(StatusZamowienia statusZamowienia) {
         this.statusZamowienia = statusZamowienia;
+    }
+
+    public Long getIdKlient() {
+        return idKlient;
+    }
+
+    public void setIdKlient(Long idKlient) {
+        this.idKlient = idKlient;
     }
 }

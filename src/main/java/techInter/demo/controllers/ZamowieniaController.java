@@ -10,12 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import techInter.demo.dto.Odpowiedz;
 import techInter.demo.dto.PotrawaDto;
 import techInter.demo.dto.ZamowienieDane;
-import techInter.demo.entity.Potrawy;
-import techInter.demo.entity.RodzajePotraw;
-import techInter.demo.entity.Zamowienie;
-import techInter.demo.service.PotrawyService;
-import techInter.demo.service.RodzajePotrawService;
-import techInter.demo.service.ZamowienieService;
+import techInter.demo.entity.*;
+import techInter.demo.repository.StatusRepo;
+import techInter.demo.service.*;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -24,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/zamowienia")
@@ -33,10 +31,18 @@ public class ZamowieniaController {
     private PotrawyService potrawyService;
 
     @Autowired
-    private ZamowienieService zamowienieService;
+    private SzczegolyZamowieniaService szczegolyZamowieniaService;
 
     @Autowired
     private RodzajePotrawService rodzajePotrawService;
+
+    @Autowired
+    private ZamowienieService zamowienieService;
+
+    @Autowired
+    private StatusZamowieniaService statusZamowieniaService;
+
+
 
     @GetMapping("")
     public String zamowienia(Model model){
@@ -57,17 +63,30 @@ public class ZamowieniaController {
     @PostMapping("/zamow")
     public ResponseEntity<?> Zamowienie(@RequestBody ZamowienieDane dane) throws ParseException {
         Odpowiedz odpowiedz = new Odpowiedz();
-        System.out.println(dane.getAdres());
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         LocalDateTime dateTime = LocalDateTime.parse(dane.getNa_kiedy(), format);
-        System.out.println(dateTime);
-        odpowiedz.setText("OK, jest ok");
+        odpowiedz.setText("Zamówienie zostało złożone. Dziękujemy");
+
+        Map<String, Integer> koszyk = dane.getKoszyk();
+
+        Zamowienie zamowienie = new Zamowienie();
+        zamowienie.setStatusZamowienia(statusZamowieniaService.pobierzWRealizacji());
+        zamowienie.setAdres(dane.getAdres());
+        zamowienie.setNaKiedy(dateTime);
+        zamowienie.setIdKlient(1L);
+        Long idZamowienia = zamowienieService.zapiszIzwrocId(zamowienie);
+
+        for (Map.Entry<String, Integer> entry : koszyk.entrySet()) {
+            SzczegolyZamowienia szczegolyZamowienia = new SzczegolyZamowienia();
+            szczegolyZamowienia.setIdPotrway(Integer.parseInt(entry.getKey()));
+            szczegolyZamowienia.setIloscPotraw(entry.getValue());
+            szczegolyZamowienia.setIdZamowienia(idZamowienia);
+            Long ilosc = szczegolyZamowieniaService.pobierzIlosc();
+            szczegolyZamowienia.setId(++ilosc);
+            szczegolyZamowieniaService.dodaj(szczegolyZamowienia);
+        }
         return new ResponseEntity<>(odpowiedz, HttpStatus.OK);
     }
 
-    @GetMapping("/test")
-    public void Test() {
-        List<Zamowienie> lista = zamowienieService.getAll();
-        System.out.println(lista);
-    }
+
 }
